@@ -1,14 +1,17 @@
-FROM ruby:2.5-alpine
+FROM ruby:2.5.1
+
+RUN apt-get update && apt-get install -y nodejs \
+&& apt-get clean && rm -rf /var/lib/apt/lists/*
+
+COPY ./Gemfile /usr/src/app/
+COPY ./Gemfile.lock /usr/src/app/
+WORKDIR /usr/src/app
+
+RUN bundle install
+
+COPY . /usr/src/app
+VOLUME /usr/src/app/source
+
 EXPOSE 4567
 
-RUN apk update \
- && apk add coreutils git make g++ nodejs
-
-RUN git clone https://github.com/tacobell1988/slate /slate/source_orig
-
-RUN cd /slate/source_orig && bundle install
-
-VOLUME /slate/source
-VOLUME /slate/build
-
-CMD cd /slate && cp -nr source_orig/* source && cd source && exec bundle exec middleman server --watcher-force-polling
+CMD ["bundle", "exec", "middleman", "server", "--watcher-force-polling"]
