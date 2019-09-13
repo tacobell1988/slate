@@ -19,7 +19,7 @@ search: true
 
 # Introduction
 
-Welcomes to the Bleeping Cloud Sample Template Docs
+Welcome to the Bleeping Cloud Sample Template Docs
 
 
 This documentation page was created for [BleepingCloud.com](http://bleepingcloud.com).
